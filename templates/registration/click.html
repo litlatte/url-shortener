@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class='row bg-dark text-white p-5' style="height: 20vh;">
+    <div class='col-11'>
+        <h4><a href='/'>Home</a></h4>
+        <h5>Hi {{ user.get_username|safe }}</h5>
+        <a>Clicks for {{ slug }}</a>
+    </div>
+    <div class='col'>
+        <a href="{% url 'logout' %}">Log out</a>
+    </div>
+</div>
+
+<div class="container">
+    {% for click in clicks %}
+    <div class='card m-2 p-2 single'>
+        {% if click.user_click %}
+            <p>Username: {{ click.user_click.username }}</p>
+        {% endif %}
+        <p>IP: {{ click.ip }}</p>
+        <p><time> {{ click.timestamp }} </time></p>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+<div class="container">
+    {% for instance in slugs %}
+    
+    <div class='card m-2 p-2 single'>
+        <div class='card-body row'>
+          <div class="col-10  p-4">
+              <h5 id='long-url'>{{instance.url}}</h5>
+              <a target="_blank" href="/{{instance.slug}}" id='link'><span id='link-hostname'>host/</span><span id='link-slug'>{{instance.slug|safe}}</span></a>
+              <br>
+              <div class="mt-4">Created: <time>{{instance.created}}</time></div>
+          </div>
+          <div class="col p-4 text-right">
+            <a href="/{{instance.slug}}/clicks/"><p>Clicks: <span>{{instance.clicks.all|length}}</span></p></a>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

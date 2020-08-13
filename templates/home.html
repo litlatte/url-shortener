@@ -1,0 +1,95 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}ShortUrl{% endblock %}
+
+
+{% block content %}
+<p  class="user-login">
+{% if user.is_authenticated %}
+<a href='{% url 'account' %}'>Hi {{ user.get_username}}</a>
+{% else %}
+<a class="form-button-text" href="{% url 'login' %}">Log In</a> <a href="{% url 'signup' %}"><button class="form-button" style="border-radius: 5px; padding: 10px;">Sign Up</button></a>
+{% endif %}
+</p>
+<h1 class="center title">Shorten your urls</h1>
+<div class="url-form">
+    <form id="url-form" action="/api/create/" method="post" class="center">
+        {% csrf_token %}
+        <input type="url" name="url" required='required' placeholder="Insert the url here" id="text-input" class="text-input" />
+        {% if user.is_authenticated %}
+            <input type="text" name="slug" placeholder="Insert the slug here" id="text-input" class="text-input"/>
+        {% endif %}
+        <button id="slug-btn" class="urlbutton" type="submit">Shorten url</button>
+    </form>
+    <div id="old-url-container" class="old-url-container">
+        <p id="old-url" class="center old-url"><a class='old-url-link' id='old-url-link' href="/"></a></p>
+    </div>
+</div>
+<script>
+    oldUrlLink = document.getElementById('old-url-link');
+    textInput = document.querySelector('#text-input');
+    oldUrl = document.querySelector('#old-url');
+    oldUrlContainer = document.querySelector('#old-url-container');
+    btn = document.querySelector('#slug-btn');
+    function qualifyURL(url){
+        var img = document.createElement('img');
+        img.src = url;
+        url = img.src;
+        img.src='';
+        img = img.remove();
+        
+        return url;
+    }
+    handleUrlShort = (e)=>{
+        
+        e.preventDefault();
+        const myForm = e.target;
+        const myFormData = new FormData(myForm);
+        const method = myForm.getAttribute("method");
+        const url = "{% url 'api_create' %}"; //myFormData.getAttribute("action")
+        xhr = new XMLHttpRequest();
+        post_url = myFormData.get("url");
+        xhr.responseType ="json";
+        xhr.onload = (res)=>{
+            if(xhr.status===201){
+                oldUrlLink.setAttribute('href', '/'+ xhr.response["slug"]);
+                oldUrlLink.innerHTML = qualifyURL(oldUrlLink.getAttribute('href'));
+                oldUrlLink.setAttribute('target', '_blank');
+                oldUrlLink.style.color = "#ffbd69";
+                btn.style.display ="none";
+                oldUrlContainer.style.backgroundColor = "#111d5e";
+                oldUrlContainer.style.display = "block";
+            }else{
+                if(xhr.status ===400){
+                    oldUrlLink.innerHTML = "The url you entered is invalid";
+                    oldUrlContainer.style.backgroundColor = "#fff"
+                    oldUrlLink.style.color = "#c70039";
+                    oldUrlContainer.style.display = "block";
+                }else{
+                    oldUrlLink.innerHTML = "An error has occurred, please try again";
+                    oldUrlContainer.style.backgroundColor = "#fff"
+                    oldUrlLink.style.color = "#c70039";
+                    oldUrlContainer.style.display = "block";
+                }
+            }
+        };
+        xhr.onerror = (err) =>{
+            oldUrl.innerHTML = "An error has occurred, please try again";
+            oldUrlContainer.style.backgroundColor = "#fff";
+            oldUrl.style.color = "#c70039";
+            oldUrlContainer.style.display = "block";
+        }
+        xhr.open(method, url);
+        //xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(myFormData);
+        
+    }
+    urlForm = document.querySelector('#url-form');
+    urlForm.addEventListener("submit", handleUrlShort);
+    
+</script>
+{% endblock content %}

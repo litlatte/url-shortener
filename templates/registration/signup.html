@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Page{% endblock title %}
+
+{% block content %} 
+    <h2 class="center title">Sign Up</h2>
+    <div class='errors center'>
+        {% if form.errors %}
+            <ul class='form-errors' style="list-style-type: none;">
+                {% for error in form.errors %}
+                    
+                    <li>{{ error }} is not valid</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <form class="form center" method="post">{% csrf_token %}
+        <label class="signup-form-label" style="margin-top: 50px" for="id_username">Username</label>
+        <br />
+        <input placeholder="Username" type="text" class="signup-form-username" name="username" autofocus required id="id_username">
+        <br />
+        <label for="id_email">Email</label>
+        <br />
+        <input placeholder="Email" type="email" class="signup-form-username" name="email" autofocus required id="id_email">
+        <br />
+        <label for="id_password1">Password</label>
+        <br />
+        <input placeholder="Password" type="password" class="signup-form-password" name="password1" required id="id_password1">
+        <br />
+        <label for="id_password2">Password confirmation</label>
+        <br />
+        <input placeholder="Password confirmation" type="password" class="signup-form-password" name="password2" required id="id_password2">
+        <br />
+        <input type="hidden" name="next" value="{% url 'account' %}">
+        <button class="form-button" type="submit">Sign Up</button>
+    </form>
+{% endblock content %}
