@@ -156,5 +156,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-
 INVALID_USERNAMES = ['admin', 'anonymoususer']
