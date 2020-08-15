@@ -89,6 +89,22 @@ body, html {
     cursor: pointer;
 }
 
+
+.form-button-login {
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    color: #ffbd69;
+    text-decoration: none;
+    border: none;
+    border-radius: 25px;
+    background-color: #111d5e;
+    text-align: center;
+    display: inline-block;
+}
+.form-button-login:hover{
+    cursor: pointer;
+}
+
 .form-button-text {
     margin: 15px 30px ;
     font-family: 'Montserrat', sans-serif;
@@ -122,7 +138,12 @@ body, html {
 
 .title {
     color: white;
-    margin-top: 120px;
+    margin-top: 27vh;
+    font-family: 'Montserrat', sans-serif;
+}
+.title-signup {
+    color: white;
+    margin-top: 8vh;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -130,6 +151,7 @@ body, html {
     height: 40px;
     width: 90%;
     font-family: 'Montserrat', sans-serif;
+    font-size: 2vh;
 }
 
 .url-form {
@@ -140,6 +162,16 @@ body, html {
 .center {
     text-align: center;
 }
+
+.home-link {
+    font-size:2.5vh;
+    color: #111d5e;
+    text-decoration: none;
+}
+.home-link:hover{
+    cursor: pointer;
+}
+
 
 .urlbutton {
     font-family: 'Montserrat', sans-serif;

@@ -11,7 +11,13 @@ from django.contrib.auth.models import User
 import string
 import random
 
-
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 # Create your views here.
@@ -28,7 +34,7 @@ def create_slug(request, *args, **kwargs):
         if obj['slug'] == '':
             obj['slug'] = ''.join(random.choices(string.ascii_letters+string.digits, k=7))    
         obj['created']  = timezone.now()
-        obj['ip_creator']  = request.META['REMOTE_ADDR']
+        obj['ip_creator']  = get_client_ip(request)
         if request.user.is_authenticated:
             obj['user_creator'] = request.user
             request.user.slugs.add(serializer.save())
@@ -59,8 +65,8 @@ def slug_click_view(request, slug, *args, **kwargs):
 def slug_view(request, slug, *args, **kwargs):
     obj = get_object_or_404(RedUrl, slug=slug)
     if request.user.is_authenticated:
-        obj.clicks.add(Click.objects.create(slug=obj, user_click=request.user, ip=request.META['REMOTE_ADDR'], timestamp=timezone.now()))
-    obj.clicks.add(Click.objects.create(slug=obj, ip=request.META['REMOTE_ADDR'], timestamp=timezone.now()))
+        obj.clicks.add(Click.objects.create(slug=obj, user_click=request.user, ip=get_client_ip(request), timestamp=timezone.now()))
+    obj.clicks.add(Click.objects.create(slug=obj, ip=get_client_ip(request), timestamp=timezone.now()))
     return redirect(obj.url)
 
 def home_view(request, *args, **kwargs):
