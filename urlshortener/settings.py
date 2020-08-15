@@ -32,7 +32,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # User model used to authenticate
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'short-it-urls.herokuapp.com']
 
 
 # Application definition
@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     #Third-party
     'whitenoise.runserver_nostatic',
     'rest_framework',
@@ -93,7 +92,7 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
-REST_FRAMEWORK ={
+REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES' : [
         'rest_framework.permissions.DjangoModelPermissions',
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -163,6 +162,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
 INVALID_USERNAMES = ['admin', 'anonymoususer']
