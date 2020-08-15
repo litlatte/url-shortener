@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-9p=2@9*ogf_x$34j4(8jn3+^o$44p4-rvzre7xg7^2u3k_qr_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Changing default user model to a custom one
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -32,7 +32,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # User model used to authenticate
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'short-it-urls.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
