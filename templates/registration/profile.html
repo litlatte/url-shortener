@@ -6,7 +6,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<div class='row bg-dark text-white p-5' style="height: 20vh;">
+<div class='row bg-dark text-white p-5'>
     <div class='col-11'>
         <h4><a href='/'>Home</a></h4>
         <h5>Hi {{ user.get_username|safe }}</h5>

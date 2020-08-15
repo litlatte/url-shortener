@@ -3,7 +3,8 @@
 {% block title %}Sign Page{% endblock title %}
 
 {% block content %} 
-    <h2 class="center title">Sign Up</h2>
+    <p class='center'><a class='home-link' href="{% url 'home' %}">Home</a></p>
+    <h2 class="center title-signup">Sign Up</h2>
     <div class='errors center'>
         {% if form.errors %}
             <ul class='form-errors' style="list-style-type: none;">
@@ -33,5 +34,6 @@
         <br />
         <input type="hidden" name="next" value="{% url 'account' %}">
         <button class="form-button" type="submit">Sign Up</button>
+        <p>Have an account? <a href="{% url 'login' %}">Log in</a></p>
     </form>
 {% endblock content %}
