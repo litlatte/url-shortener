@@ -13,7 +13,7 @@ slugs and clicks pages are avaible only for authenticated users.
 	
 ## Technologies
 Project is created with
-* Django 2.2 ( due to the long-term support )
+* Django 3.2.4
 * Python 3.7
 
 ## Local Setup
