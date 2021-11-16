@@ -25,7 +25,7 @@ The normal process for setting up a django project would continue by doing:
 python manage.py makemigrations app1 app2 app3
 python manage.py migrate
 ```
-where app1 app2 app3 are the names of our applications but since this project has a circular dependency we have to some steps before.
+where app1 app2 app3 are the names of our applications but since this project has a circular dependency we have to  do some steps before.
 
 The first thing to do is to go to the `./users/models.py` file and comment the line number 13 and save the file like this:
 ```python
@@ -52,4 +52,9 @@ and now we run:
 ```
 python manage.py makemigrations users
 python manage.py migrate
+```
+
+Finally to start our server we run:
+```
+python manage.py runserver
 ```
